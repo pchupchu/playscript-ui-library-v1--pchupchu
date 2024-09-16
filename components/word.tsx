@@ -1,24 +1,31 @@
-'use client';
+import { VariantProps, cva } from 'class-variance-authority';
+import { LucideIcon } from 'lucide-react';
 
-import { cn } from '@/lib/utils';
-import { useState } from 'react';
+const backgroundVariants = cva(
+  'flex items-center justify-center rounded-full border-black',
+  {
+    variants: {
+      variant: {
+        default: 'bg-sky-100',
+        success: 'bg-emerald-100',
+      },
+      size: { default: 'p-2', sm: 'p-1' },
+    },
+    defaultVariants: {
+      variant: 'default',
+      size: 'default',
+    },
+  }
+);
 
-const Word = () => {
-  const [isActive, setIsActive] = useState(false);
+type BackgroundVariantsProps = VariantProps<typeof backgroundVariants>;
 
-  const wordClassnames = {
-    'border-primary': isActive,
-  };
+interface IconBadgeProps extends BackgroundVariantsProps {
+  icon: LucideIcon;
+}
 
-  return (
-    <div
-      className={cn(
-        'shining hover:shining-active flex items-center justify-center rounded-lg border-2 border-transparent bg-background px-5 py-2.5 text-2xl font-semibold text-white',
-        wordClassnames
-      )}>
-      <p className='my-0'>Word</p>
-    </div>
-  );
+const IconBadge = ({ variant, size }: IconBadgeProps) => {
+  return <div className={backgroundVariants({ variant, size })}></div>;
 };
 
-export default Word;
+export default IconBadge;
