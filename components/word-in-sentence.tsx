@@ -1,15 +1,13 @@
-'use client';
-
 import { VariantProps, cva } from 'class-variance-authority';
-import { motion } from 'framer-motion';
 
 const wordInSentenceVariants = cva(
-  'flex items-center justify-center rounded-lg border-2 bg-background px-5 py-2.5 text-2xl font-semibold text-white',
+  'flex h-10 px-[20px] py-2.5 tracking-wide items-center justify-center whitespace-nowrap rounded-lg text-2xl font-semibold ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50',
   {
     variants: {
       variant: {
-        default: 'border-transparent hover:shadow-primary',
-        active: 'border-primary hover:shadow-primary',
+        default:
+          'bg-background text-white border-border border-2 border-b-4 border-r-[4px] hover:px-[21px] hover:border-b-2 hover:border-r-[2px]',
+        active: '',
       },
     },
     defaultVariants: {
@@ -21,38 +19,11 @@ const wordInSentenceVariants = cva(
 type WordInSentenceVariantsProps = VariantProps<typeof wordInSentenceVariants>;
 
 interface WordInSentenceProps extends WordInSentenceVariantsProps {
-  condition: Boolean;
   children: React.ReactNode;
-  onClick: () => void;
 }
 
-const WordInSentence = ({
-  variant,
-  condition,
-  children,
-  onClick,
-}: WordInSentenceProps) => {
-  const motionVariants = {
-    shadowDefault: {
-      boxShadow: 'var(--shadow-default)',
-      transition: { type: 'spring', stiffness: 500, delay: 0.1 },
-    },
-    shadowPrimary: {
-      boxShadow: 'none',
-      // transition: { type: 'spring', stiffness: 500, delay: 0.1 },
-    },
-  };
-
-  return (
-    <motion.div
-      className={wordInSentenceVariants({ variant })}
-      onClick={onClick}
-      initial={'shadowDefault'}
-      animate={condition ? 'shadowPrimary' : 'shadowDefault'}
-      variants={motionVariants}>
-      <span>{children}</span>
-    </motion.div>
-  );
+const WordInSentence = ({ variant, children }: WordInSentenceProps) => {
+  return <div className={wordInSentenceVariants({ variant })}>{children}</div>;
 };
 
 export default WordInSentence;
