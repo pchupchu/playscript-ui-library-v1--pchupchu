@@ -1,6 +1,5 @@
 'use client';
 
-import Shining from '@/components/shining';
 import WordInSentence from '@/components/word-in-sentence';
 import { useState } from 'react';
 
