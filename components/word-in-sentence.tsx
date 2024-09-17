@@ -1,14 +1,17 @@
+import { cn } from '@/lib/utils';
 import { VariantProps, cva } from 'class-variance-authority';
+import { motion } from 'framer-motion';
+import Shining from './shining';
 
 const wordInSentenceVariants = cva(
-  'flex h-10 px-[20px] py-2.5 tracking-wide items-center justify-center whitespace-nowrap rounded-lg text-2xl font-semibold ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50',
+  'relative flex px-5 py-2.5 tracking-wide items-center justify-center whitespace-nowrap rounded-lg text-2xl font-semibold text-white',
   {
     variants: {
       variant: {
         default:
-          'bg-background text-white border-border border-2 border-b-4 border-r-[4px] hover:px-[21px] hover:border-b-2 hover:border-r-[2px] hover:shadow-primary',
+          'bg-background border-border border-b-4 shadow-default hover:border-2',
         active:
-          'bg-background text-white border-primary border-2 hover:px-[21px] hover:shadow-primary',
+          'bg-background border-2 border-primary border-b-4 shadow-default hover:border-b-2',
       },
     },
     defaultVariants: {
@@ -21,7 +24,7 @@ type WordInSentenceVariantsProps = VariantProps<typeof wordInSentenceVariants>;
 
 interface WordInSentenceProps extends WordInSentenceVariantsProps {
   children: React.ReactNode;
-  onClick?: () => void;
+  onClick: () => void;
 }
 
 const WordInSentence = ({
@@ -29,10 +32,24 @@ const WordInSentence = ({
   onClick,
   children,
 }: WordInSentenceProps) => {
+  const motionVariants = {
+    shadowOn: {
+      boxShadow: 'var(--shadow-default)',
+    },
+    shadowOff: {
+      boxShadow: 'none',
+    },
+  };
   return (
-    <span onClick={onClick} className={wordInSentenceVariants({ variant })}>
+    <motion.span
+      className={cn(wordInSentenceVariants({ variant }))}
+      onClick={onClick}
+      initial={'shadowOn'}
+      whileHover={'shadowOff'}
+      variants={motionVariants}>
       {children}
-    </span>
+      <Shining />
+    </motion.span>
   );
 };
 
