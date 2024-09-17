@@ -6,8 +6,9 @@ const wordInSentenceVariants = cva(
     variants: {
       variant: {
         default:
-          'bg-background text-white border-border border-2 border-b-4 border-r-[4px] hover:px-[21px] hover:border-b-2 hover:border-r-[2px]',
-        active: '',
+          'bg-background text-white border-border border-2 border-b-4 border-r-[4px] hover:px-[21px] hover:border-b-2 hover:border-r-[2px] hover:shadow-primary',
+        active:
+          'bg-background text-white border-primary border-2 hover:px-[21px] hover:shadow-primary',
       },
     },
     defaultVariants: {
@@ -20,10 +21,19 @@ type WordInSentenceVariantsProps = VariantProps<typeof wordInSentenceVariants>;
 
 interface WordInSentenceProps extends WordInSentenceVariantsProps {
   children: React.ReactNode;
+  onClick?: () => void;
 }
 
-const WordInSentence = ({ variant, children }: WordInSentenceProps) => {
-  return <div className={wordInSentenceVariants({ variant })}>{children}</div>;
+const WordInSentence = ({
+  variant,
+  onClick,
+  children,
+}: WordInSentenceProps) => {
+  return (
+    <span onClick={onClick} className={wordInSentenceVariants({ variant })}>
+      {children}
+    </span>
+  );
 };
 
 export default WordInSentence;
